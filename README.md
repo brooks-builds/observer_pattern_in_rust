@@ -1,0 +1,1 @@
+observer_pattern_in_rust
