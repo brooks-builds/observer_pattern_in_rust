@@ -5,6 +5,8 @@ use ggez::{graphics, Context, GameResult};
 pub struct Ball {
     mesh: Mesh,
     location: Point2<f32>,
+    velocity: Point2<f32>,
+    radius: f32,
 }
 
 impl Ball {
@@ -14,10 +16,27 @@ impl Ball {
         Ok(Ball {
             mesh: Ball::create_mesh(context, radius)?,
             location: Point2::new(screen_width / 2.0, screen_height / 2.0),
+            velocity: Point2::new(0.1, 0.1),
+            radius,
         })
     }
 
-    pub fn update(&self) {}
+    pub fn update(&mut self, screen_width: f32, screen_height: f32) {
+        self.location.x += self.velocity.x;
+        self.location.y += self.velocity.y;
+
+        if self.location.y + self.radius >= screen_height {
+            self.velocity.y *= -1.0;
+        } else if self.location.y - self.radius <= 0.0 {
+            self.velocity.y *= -1.0;
+        }
+
+        if self.location.x + self.radius >= screen_width {
+            self.velocity.x *= -1.0;
+        } else if self.location.x - self.radius <= 0.0 {
+            self.velocity.x *= -1.0;
+        }
+    }
     pub fn draw(&self, context: &mut Context) -> GameResult<()> {
         graphics::draw(
             context,

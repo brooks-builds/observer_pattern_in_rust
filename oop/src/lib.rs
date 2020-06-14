@@ -22,9 +22,10 @@ impl Game {
 }
 
 impl EventHandler for Game {
-    fn update(&mut self, _ctx: &mut Context) -> GameResult<()> {
-        // Update code here...
-        self.ball.update();
+    fn update(&mut self, context: &mut Context) -> GameResult<()> {
+        let (screen_width, screen_height) = graphics::drawable_size(context);
+
+        self.ball.update(screen_width, screen_height);
         Ok(())
     }
 
