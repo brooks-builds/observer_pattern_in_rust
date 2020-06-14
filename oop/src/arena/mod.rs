@@ -18,7 +18,7 @@ impl Arena {
         })
     }
 
-    pub fn run(&self, context: &mut Context) -> GameResult<()> {
+    pub fn draw(&self, context: &mut Context) -> GameResult<()> {
         self.dividing_line.draw(context)?;
         self.score.draw(context)
     }
