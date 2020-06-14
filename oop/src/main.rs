@@ -13,7 +13,7 @@ fn main() {
     // Create an instance of your event handler.
     // Usually, you should provide it with the Context object to
     // use when setting your game up.
-    let mut my_game = Game::new(&mut ctx);
+    let mut my_game = Game::new(&mut ctx).unwrap();
 
     // Run!
     match event::run(&mut ctx, &mut event_loop, &mut my_game) {

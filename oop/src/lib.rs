@@ -1,16 +1,19 @@
+mod drawing_system;
+
+use drawing_system::DrawingSystem;
 use ggez::event::EventHandler;
 use ggez::{graphics, Context, GameResult};
 
 pub struct Game {
-    // Your state here...
+    drawing_system: DrawingSystem,
 }
 
 impl Game {
-    pub fn new(_ctx: &mut Context) -> Game {
-        // Load/create resources such as images here.
-        Game {
-		    // ...
-		}
+    pub fn new(context: &mut Context) -> GameResult<Game> {
+        let (screen_width, screen_height) = graphics::drawable_size(context);
+        Ok(Game {
+            drawing_system: DrawingSystem::new(screen_width, screen_height, context)?,
+        })
     }
 }
 
@@ -20,9 +23,12 @@ impl EventHandler for Game {
         Ok(())
     }
 
-    fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
-        graphics::clear(ctx, graphics::BLACK);
+    fn draw(&mut self, context: &mut Context) -> GameResult<()> {
+        graphics::clear(context, graphics::BLACK);
         // Draw code here...
-        graphics::present(ctx)
+
+        self.drawing_system.run(context)?;
+
+        graphics::present(context)
     }
 }
