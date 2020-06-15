@@ -1,3 +1,4 @@
+use super::{EventSystem, GameEvent};
 use ggez::graphics::{Color, DrawMode, DrawParam, Mesh, MeshBuilder};
 use ggez::nalgebra::Point2;
 use ggez::{graphics, Context, GameResult};
@@ -21,7 +22,7 @@ impl Ball {
         })
     }
 
-    pub fn update(&mut self, screen_width: f32, screen_height: f32) {
+    pub fn update(&mut self, screen_width: f32, screen_height: f32, event_system: &EventSystem) {
         self.location.x += self.velocity.x;
         self.location.y += self.velocity.y;
 
@@ -33,8 +34,10 @@ impl Ball {
 
         if self.location.x + self.radius >= screen_width {
             self.velocity.x *= -1.0;
+            event_system.notify(GameEvent::PlayerScored);
         } else if self.location.x - self.radius <= 0.0 {
             self.velocity.x *= -1.0;
+            event_system.notify(GameEvent::AiScored);
         }
     }
     pub fn draw(&self, context: &mut Context) -> GameResult<()> {
