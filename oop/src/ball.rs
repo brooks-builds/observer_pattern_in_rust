@@ -17,7 +17,7 @@ impl Ball {
         Ok(Ball {
             mesh: Ball::create_mesh(context, radius)?,
             location: Point2::new(screen_width / 2.0, screen_height / 2.0),
-            velocity: Point2::new(0.1, 0.1),
+            velocity: Point2::new(0.5, 0.1),
             radius,
         })
     }
